@@ -11,38 +11,80 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D rigid;
     private float height;
 
-    public PlayerState state = PlayerState.Running;
+    [field: SerializeField]
+    public PlayerState state { get; private set; } = PlayerState.Running;
+    public int healthPoints { get; private set; }
+
+    public static PlayerController instance;
 
     void Start()
     {
+        instance = this;
         rigid = GetComponent<Rigidbody2D>();
-        height = sprite.bounds.extents.y;
+        //height = sprite.bounds.extents.y;
+        EventBus.OnPlayerAnimationOver += AnimationOver;
     }
 
     void Update()
     {
-        Debug.DrawRay(transform.position, Vector3.down * (height + 0.1f), Color.red);
+        //Debug.DrawRay(transform.position, Vector2.down * (height + 0.1f), Color.red);
     }
 
-    private bool IsGrounded()
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        var hit = Physics2D.Raycast(gameObject.transform.position, Vector2.down, height + 0.1f, LayerMask.GetMask("Ground"));
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Ground"))
+        {
+            if (state == PlayerState.Jumping)
+            {
+                state = PlayerState.Running;
+            }
+        }
+    }
 
-        return hit;
+    private void AnimationOver()
+    {
+        SetPlayerState(PlayerState.Running);
     }
 
     public void Jump(InputAction.CallbackContext context)
     {
-        Debug.Log(context);
-        if (context.performed && IsGrounded())
+        if (context.performed && state == PlayerState.Running)
         {
-            Debug.Log(context);
+            SetPlayerState(PlayerState.Jumping);
             rigid.AddForce(Vector2.up * speed, ForceMode2D.Impulse);
+            EventBus.SendJumpEvent();
         }
     }
 
     public void Sliding(InputAction.CallbackContext context)
     {
-        EventBus.SendSlidingEvent();
+        if (context.performed && state == PlayerState.Running)
+        {
+            EventBus.SendSlidingEvent();
+            SetPlayerState(PlayerState.Sliding);
+        }
+    }
+
+    public void BounceLeft(InputAction.CallbackContext context)
+    {
+        if (context.performed && state == PlayerState.Running)
+        {
+            SetPlayerState(PlayerState.BouncingLeft);
+            EventBus.SendBounceLeftEvent();
+        }
+    }
+
+    public void BounceRight(InputAction.CallbackContext context)
+    {
+        if (context.performed && state == PlayerState.Running)
+        {
+            SetPlayerState(PlayerState.BoucningRight);
+            EventBus.SendBounceRightEvent();
+        }
+    }
+
+    public void SetPlayerState(PlayerState state)
+    {
+        this.state = state;
     }
 }

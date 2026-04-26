@@ -36,8 +36,6 @@ public class ObjectPoolManager : MonoBehaviour
         prefabObject.transform.rotation = rotation;
         prefabObject.SetActive(true);
 
-        Debug.Log("Complete");
-
         return prefabObject;
     }
 

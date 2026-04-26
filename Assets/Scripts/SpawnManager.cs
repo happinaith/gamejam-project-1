@@ -17,7 +17,7 @@ public class SpawnManager : MonoBehaviour
     {
         if (timer > 3f)
         {
-            //SpawnRandom();
+            SpawnRandom();
             timer = 0;
         }
 
@@ -28,6 +28,6 @@ public class SpawnManager : MonoBehaviour
     {
         GameObject gameObject = gameObjectPrefabs[Random.Range(0, gameObjectPrefabs.Length)];
 
-        poolManager.GetGameObject(gameObject, Vector2.up, gameObject.transform.rotation);
+        poolManager.GetGameObject(gameObject, new Vector2(15, -1.5f), gameObject.transform.rotation);
     }
 }
