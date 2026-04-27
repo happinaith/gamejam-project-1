@@ -19,6 +19,13 @@ public class PlayerVisual : MonoBehaviour
         _animator = GetComponent<Animator>();
     }
 
+    private void OnDestroy()
+    {
+        EventBus.OnSliding -= SlidingEffect;
+        EventBus.OnBounce -= BounceEffect;
+        EventBus.OnJumping -= JumpingEffect;
+    }
+
     private void JumpingEffect()
     {
         if (PlayerController.instance.state != PlayerState.Running) return;

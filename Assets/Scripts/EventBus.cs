@@ -11,9 +11,12 @@ public static class EventBus
 
     public static event Action OnHealthPickUp;
     public static event Action OnEnergyPickUp;
+    public static event Action OnEnergyDeducted;
 
     public static event Action OnPlayerDamage;
     public static event Action OnPlayerDead;
+    public static event Action OnPlayerWin;
+
 
     public static void SendSlidingEvent()
     {
@@ -45,6 +48,11 @@ public static class EventBus
         OnEnergyPickUp?.Invoke();
     }
 
+    public static void EnergyDeductedEvent()
+    {
+        OnEnergyDeducted?.Invoke();
+    }
+
     public static void SendPlayerDeadEvent()
     {
         OnPlayerDead?.Invoke();
@@ -53,6 +61,10 @@ public static class EventBus
     public static void SendPlayerDamageEvent()
     {
         OnPlayerDamage?.Invoke();
+    }
+    public static void SendPlayerWinEvent()
+    {
+        OnPlayerWin?.Invoke();
     }
 
 }

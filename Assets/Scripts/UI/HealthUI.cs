@@ -14,6 +14,12 @@ public class HealthUI : MonoBehaviour
         EventBus.OnHealthPickUp += DrawHealth;
     }
 
+    private void OnDestroy()
+    {
+        EventBus.OnPlayerDamage -= DrawHealth;
+        EventBus.OnHealthPickUp -= DrawHealth;
+    }
+
     private void Start()
     {
         DrawHealth();
@@ -23,7 +29,7 @@ public class HealthUI : MonoBehaviour
     {
         ClearHealth();
 
-        for (int i = 0; i < PlayerController.instance.energyPointsMax; i++)
+        for (int i = 0; i < PlayerController.instance.healthPointsMax; i++)
         {
             CreateEmptyHeart();
         }

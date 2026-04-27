@@ -5,23 +5,16 @@ public class SettingsMenuUI : MonoBehaviour
 {
     [SerializeField] Slider _soundSlider;
     [SerializeField] Slider _musicSlider;
+    private AudioSource audioSource;
 
-    public float soundvalue;
-    public float musicvalue;
-
-    public void SoundVolumeChange(float volumeValue)
+    private void Awake()
     {
-        soundvalue = volumeValue;
-    }
-
-    public void MusicVolumeChanged(float musicValue)
-    {
-        musicvalue = musicValue;
+        audioSource = GetComponent<AudioSource>();
     }
 
     public void HideSettings()
     {
+        if (audioSource != null) audioSource.Play();
         gameObject.SetActive(false);
-        // show PauseMenu
     }
 }

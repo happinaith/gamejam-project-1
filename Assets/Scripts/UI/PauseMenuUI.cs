@@ -2,21 +2,53 @@ using UnityEngine;
 
 public class PauseMenuUI : MonoBehaviour
 {
-    [SerializeField] private GameObject settings;
+    public GameObject pauseUI;
+    public static bool isPaused = false;
 
-    public void ContinueGame()
+    private AudioSource pauseAudioSource;
+
+    private void Awake()
     {
-        // SceneManager.Time bla bla
-        gameObject.SetActive(false);
+        pauseAudioSource = GetComponent<AudioSource>();
     }
 
-    public void OpenSettings()
+    void Update()
     {
-        settings.SetActive(true);
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (isPaused)
+                Resume();
+            else
+                Pause();
+        }
     }
 
-    public void BackToMenu()
+    public void Resume()
     {
-        // SceneManager.LoadScene ??
+        if (pauseAudioSource != null && pauseUI.activeSelf) pauseAudioSource.Play();
+        pauseUI.SetActive(false);
+        Time.timeScale = 1f;
+        isPaused = false;
+    }
+
+    void Pause()
+    {
+        pauseUI.SetActive(true);
+        Time.timeScale = 0f;
+        isPaused = true;
+    }
+
+    public void Restart()
+    {
+        pauseAudioSource.Play();
+        Time.timeScale = 1f;
+        Loader.Load(Loader.Scene.GameScene);
+    }
+
+    public void LoadMenu()
+    {
+        pauseAudioSource.Play();
+        Time.timeScale = 1f;
+        Loader.Load(Loader.Scene.MainMenu);
     }
 }

@@ -16,60 +16,102 @@ public class SpawnManager : MonoBehaviour
 
     private ObjectPoolManager poolManager;
 
-    public float maxTimeObstacle { get; private set; } = 5f;
-    public float maxTimeInvisible { get; private set; } = 7f;
-    public float maxTimeHealthPower { get; private set; } = 15f;
-    public float maxTimeEnergyPower { get; private set; } = 20f;
+    public float minTimeObstacle = 3f;
+    public float maxTimeObstacle = 6f;
 
+    public float minTimeInvisible = 5f;
+    public float maxTimeInvisible = 10f;
+
+    public float minTimeHealthPower = 15f;
+    public float maxTimeHealthPower = 25f;
+
+    public float minTimeEnergyPower = 10f;
+    public float maxTimeEnergyPower = 18f;
 
     private float timerObstacle = 0;
     private float timerInvisible = 0;
     private float timerHealthPower = 0;
     private float timerEnergyPower = 0;
 
+    private float currentMaxTimeObstacle;
+    private float currentMaxTimeInvisible;
+    private float currentMaxTimeHealthPower;
+    private float currentMaxTimeEnergyPower;
+
     private void Start()
     {
         poolManager = GetComponent<ObjectPoolManager>();
+
+        // Сразу задаем первые случайные тайминги
+        SetNextSpawnTimeObstacle();
+        SetNextSpawnTimeInvisible();
+        SetNextSpawnTimeHealth();
+        SetNextSpawnTimeEnergy();
     }
 
     private void Update()
     {
-        // заменить на GameManager состояние
-        if (true)
+        // Только если игра идет
+        if (GameManager.instance != null && !GameManager.instance.isDead)
         {
-            if (timerObstacle > maxTimeObstacle)
+            UpdateTimers();
+
+            // Проверяем каждого кандидата
+            if (timerObstacle > currentMaxTimeObstacle)
             {
                 SpawnRandomObstacle();
-                timerObstacle = 0;
+                SetNextSpawnTimeObstacle();
             }
 
-            if (timerInvisible > maxTimeInvisible)
+            if (timerInvisible > currentMaxTimeInvisible)
             {
                 SpawnRandomInvisible();
-                timerInvisible = 0f;
+                SetNextSpawnTimeInvisible();
             }
 
-            if (timerHealthPower > maxTimeHealthPower)
+            if (timerHealthPower > currentMaxTimeHealthPower)
             {
                 SpawnHP();
-                timerHealthPower = 0f;
+                SetNextSpawnTimeHealth();
             }
 
-            if (timerEnergyPower > maxTimeEnergyPower)
+            if (timerEnergyPower > currentMaxTimeEnergyPower)
             {
                 SpawnEnergy();
-                timerEnergyPower = 0f;
+                SetNextSpawnTimeEnergy();
             }
-
-            UpdateTimers();
         }
+    }
+
+    private void SetNextSpawnTimeObstacle()
+    {
+        timerObstacle = 0f;
+        currentMaxTimeObstacle = Random.Range(minTimeObstacle, maxTimeObstacle);
+    }
+
+    private void SetNextSpawnTimeInvisible()
+    {
+        timerInvisible = 0f;
+        currentMaxTimeInvisible = Random.Range(minTimeInvisible, maxTimeInvisible);
+    }
+
+    private void SetNextSpawnTimeHealth()
+    {
+        timerHealthPower = 0f;
+        currentMaxTimeHealthPower = Random.Range(minTimeHealthPower, maxTimeHealthPower);
+    }
+
+    private void SetNextSpawnTimeEnergy()
+    {
+        timerEnergyPower = 0f;
+        currentMaxTimeEnergyPower = Random.Range(minTimeEnergyPower, maxTimeEnergyPower);
     }
 
     private void SpawnRandomObstacle()
     {
         GameObject gameObject = obstaclePrefabs[Random.Range(0, obstaclePrefabs.Length)];
 
-        poolManager.GetGameObject(gameObject, new Vector2(15, -1.5f), gameObject.transform.rotation);
+        poolManager.GetGameObject(gameObject, new Vector2(15, -4.8f), gameObject.transform.rotation);
     }
 
     private void SpawnRandomInvisible()
@@ -80,22 +122,22 @@ public class SpawnManager : MonoBehaviour
 
         if (obstacleClass.direction == ObstacleClass.Direction.Right)
         {
-            poolManager.GetGameObject(gameObject, new Vector2(-15, -1.5f), gameObject.transform.rotation);
+            poolManager.GetGameObject(gameObject, new Vector2(-15, -4.4f), gameObject.transform.rotation);
         }
         else if (obstacleClass.direction == ObstacleClass.Direction.Left)
         {
-            poolManager.GetGameObject(gameObject, new Vector2(15, -1.5f), gameObject.transform.rotation);
+            poolManager.GetGameObject(gameObject, new Vector2(15, -4.4f), gameObject.transform.rotation);
         }
     }
 
     private void SpawnEnergy()
     {
-        poolManager.GetGameObject(energyPrefab, new Vector2(15, 0.5f), gameObject.transform.rotation);
+        poolManager.GetGameObject(energyPrefab, new Vector2(15, -3f), gameObject.transform.rotation);
     }
 
     private void SpawnHP()
     {
-        poolManager.GetGameObject(healthPrefab, new Vector2(15, 0.5f), gameObject.transform.rotation);
+        poolManager.GetGameObject(healthPrefab, new Vector2(15, -3f), gameObject.transform.rotation);
     }
 
     private void UpdateTimers()

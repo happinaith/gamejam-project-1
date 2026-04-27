@@ -11,6 +11,13 @@ public class EnergyUI : MonoBehaviour
     private void Awake()
     {
         EventBus.OnEnergyPickUp += DrawEnergy;
+        EventBus.OnEnergyDeducted += DrawEnergy;
+    }
+
+    private void OnDestroy()
+    {
+        EventBus.OnEnergyPickUp -= DrawEnergy;
+        EventBus.OnEnergyDeducted -= DrawEnergy;
     }
 
     private void Start()

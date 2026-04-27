@@ -1,25 +1,33 @@
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class MainMenuUI : MonoBehaviour
 {
 
     [SerializeField] private GameObject settings;
-    
+    private AudioSource audioSource;
+
+    private void Awake()
+    {
+        audioSource = GetComponent<AudioSource>();
+    }
+
 
     public void StartMainGame()
     {
-        // SceneManager.LoadScene();
+        audioSource.Play();
+        Loader.Load(Loader.Scene.GameIntro);
     }
 
     public void OpenSettings()
     {
-        // Hide Main menu for now and open settings
-
+        audioSource.Play();
         settings.SetActive(true);
     }
 
     public void CloseGame()
     {
-        // Close the game?
+        audioSource.Play();
+        Application.Quit();
     }
 }
