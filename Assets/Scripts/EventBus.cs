@@ -5,10 +5,15 @@ public static class EventBus
 {
     public static event Action OnSliding;
     public static event Action OnJumping;
-    public static event Action OnBounceLeft;
-    public static event Action OnBounceRight;
+    public static event Action OnBounce;
 
     public static event Action OnPlayerAnimationOver;
+
+    public static event Action OnHealthPickUp;
+    public static event Action OnEnergyPickUp;
+
+    public static event Action OnPlayerDamage;
+    public static event Action OnPlayerDead;
 
     public static void SendSlidingEvent()
     {
@@ -20,19 +25,34 @@ public static class EventBus
         OnJumping?.Invoke(); 
     }
 
-    public static void SendBounceLeftEvent()
+    public static void SendBounceEvent()
     {
-        OnBounceLeft?.Invoke();
-    }
-
-    public static void SendBounceRightEvent()
-    {
-        OnBounceRight?.Invoke();
+        OnBounce?.Invoke();
     }
 
     public static void SendPlayerAnimationOverEvent()
     {
         OnPlayerAnimationOver?.Invoke();
+    }
+
+    public static void OnHealthPickUpEvent()
+    {
+        OnHealthPickUp?.Invoke();
+    }
+
+    public static void OnEnergyPickUpEvent()
+    {
+        OnEnergyPickUp?.Invoke();
+    }
+
+    public static void SendPlayerDeadEvent()
+    {
+        OnPlayerDead?.Invoke();
+    }
+
+    public static void SendPlayerDamageEvent()
+    {
+        OnPlayerDamage?.Invoke();
     }
 
 }

@@ -9,11 +9,17 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private SpriteRenderer sprite;
 
     private Rigidbody2D rigid;
-    private float height;
 
     [field: SerializeField]
     public PlayerState state { get; private set; } = PlayerState.Running;
+    [field: SerializeField]
     public int healthPoints { get; private set; }
+    [field: SerializeField]
+    public int healthPointsMax { get; private set; }
+    [field: SerializeField]
+    public int energyPoints { get; private set; }
+    [field: SerializeField]
+    public int energyPointsMax { get; private set; }
 
     public static PlayerController instance;
 
@@ -21,7 +27,6 @@ public class PlayerController : MonoBehaviour
     {
         instance = this;
         rigid = GetComponent<Rigidbody2D>();
-        //height = sprite.bounds.extents.y;
         EventBus.OnPlayerAnimationOver += AnimationOver;
     }
 
@@ -50,9 +55,9 @@ public class PlayerController : MonoBehaviour
     {
         if (context.performed && state == PlayerState.Running)
         {
+            EventBus.SendJumpEvent();
             SetPlayerState(PlayerState.Jumping);
             rigid.AddForce(Vector2.up * speed, ForceMode2D.Impulse);
-            EventBus.SendJumpEvent();
         }
     }
 
@@ -65,26 +70,43 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public void BounceLeft(InputAction.CallbackContext context)
+    public void Bounce(InputAction.CallbackContext context)
     {
         if (context.performed && state == PlayerState.Running)
         {
-            SetPlayerState(PlayerState.BouncingLeft);
-            EventBus.SendBounceLeftEvent();
-        }
-    }
-
-    public void BounceRight(InputAction.CallbackContext context)
-    {
-        if (context.performed && state == PlayerState.Running)
-        {
-            SetPlayerState(PlayerState.BoucningRight);
-            EventBus.SendBounceRightEvent();
+            EventBus.SendBounceEvent();
+            SetPlayerState(PlayerState.Bouncing);
         }
     }
 
     public void SetPlayerState(PlayerState state)
     {
         this.state = state;
+    }
+
+    public void TakeDamage()
+    {
+        healthPoints -= 1;
+        EventBus.SendPlayerDamageEvent();
+        if (healthPoints <= 0)
+        {
+            EventBus.SendPlayerDeadEvent();
+            return;
+        }
+    }
+
+    public void GiveHealth()
+    {
+        if (healthPoints == healthPointsMax) return;
+
+        healthPoints += 1;
+        EventBus.OnHealthPickUpEvent();
+    }
+
+    public void GiveEnergy()
+    {
+        if (energyPoints == energyPointsMax) return;
+        energyPoints += 1;
+        EventBus.OnEnergyPickUpEvent();
     }
 }

@@ -1232,7 +1232,7 @@
     "m_Title": "Center",
     "m_Position": {
         "x": -3826.0,
-        "y": -93.00003051757813
+        "y": -92.99995422363281
     }
 }
 
@@ -1929,8 +1929,8 @@
     "m_CustomSlotLabel": "",
     "m_DismissedVersion": 0,
     "m_Precision": 0,
-    "overrideHLSLDeclaration": false,
-    "hlslDeclarationOverride": 0,
+    "overrideHLSLDeclaration": true,
+    "hlslDeclarationOverride": 3,
     "m_Hidden": false,
     "m_PerRendererData": false,
     "m_customAttributes": [],
@@ -3280,7 +3280,7 @@
     "m_Title": "Ripple Creation and controlling strength",
     "m_Position": {
         "x": -2486.0,
-        "y": -190.00003051757813
+        "y": -189.99993896484376
     }
 }
 

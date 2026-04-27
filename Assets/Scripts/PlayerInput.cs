@@ -111,18 +111,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""BounceLeft"",
+                    ""name"": ""Bounce"",
                     ""type"": ""Button"",
                     ""id"": ""45e578fb-0b5e-4996-9b2e-c4ab45a7090d"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""BounceRight"",
-                    ""type"": ""Button"",
-                    ""id"": ""d034aa08-b403-41e4-82d8-85e6defd9254"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
@@ -159,18 +150,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""BounceLeft"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""6ee339fa-bff9-4f04-a1b7-2ed449d65b4d"",
-                    ""path"": ""<Keyboard>/d"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""BounceRight"",
+                    ""action"": ""Bounce"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -183,8 +163,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
         m_Player_SlideDown = m_Player.FindAction("SlideDown", throwIfNotFound: true);
-        m_Player_BounceLeft = m_Player.FindAction("BounceLeft", throwIfNotFound: true);
-        m_Player_BounceRight = m_Player.FindAction("BounceRight", throwIfNotFound: true);
+        m_Player_Bounce = m_Player.FindAction("Bounce", throwIfNotFound: true);
     }
 
     ~@PlayerInput()
@@ -267,8 +246,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     private List<IPlayerActions> m_PlayerActionsCallbackInterfaces = new List<IPlayerActions>();
     private readonly InputAction m_Player_Jump;
     private readonly InputAction m_Player_SlideDown;
-    private readonly InputAction m_Player_BounceLeft;
-    private readonly InputAction m_Player_BounceRight;
+    private readonly InputAction m_Player_Bounce;
     /// <summary>
     /// Provides access to input actions defined in input action map "Player".
     /// </summary>
@@ -289,13 +267,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         /// </summary>
         public InputAction @SlideDown => m_Wrapper.m_Player_SlideDown;
         /// <summary>
-        /// Provides access to the underlying input action "Player/BounceLeft".
+        /// Provides access to the underlying input action "Player/Bounce".
         /// </summary>
-        public InputAction @BounceLeft => m_Wrapper.m_Player_BounceLeft;
-        /// <summary>
-        /// Provides access to the underlying input action "Player/BounceRight".
-        /// </summary>
-        public InputAction @BounceRight => m_Wrapper.m_Player_BounceRight;
+        public InputAction @Bounce => m_Wrapper.m_Player_Bounce;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -328,12 +302,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @SlideDown.started += instance.OnSlideDown;
             @SlideDown.performed += instance.OnSlideDown;
             @SlideDown.canceled += instance.OnSlideDown;
-            @BounceLeft.started += instance.OnBounceLeft;
-            @BounceLeft.performed += instance.OnBounceLeft;
-            @BounceLeft.canceled += instance.OnBounceLeft;
-            @BounceRight.started += instance.OnBounceRight;
-            @BounceRight.performed += instance.OnBounceRight;
-            @BounceRight.canceled += instance.OnBounceRight;
+            @Bounce.started += instance.OnBounce;
+            @Bounce.performed += instance.OnBounce;
+            @Bounce.canceled += instance.OnBounce;
         }
 
         /// <summary>
@@ -351,12 +322,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @SlideDown.started -= instance.OnSlideDown;
             @SlideDown.performed -= instance.OnSlideDown;
             @SlideDown.canceled -= instance.OnSlideDown;
-            @BounceLeft.started -= instance.OnBounceLeft;
-            @BounceLeft.performed -= instance.OnBounceLeft;
-            @BounceLeft.canceled -= instance.OnBounceLeft;
-            @BounceRight.started -= instance.OnBounceRight;
-            @BounceRight.performed -= instance.OnBounceRight;
-            @BounceRight.canceled -= instance.OnBounceRight;
+            @Bounce.started -= instance.OnBounce;
+            @Bounce.performed -= instance.OnBounce;
+            @Bounce.canceled -= instance.OnBounce;
         }
 
         /// <summary>
@@ -412,18 +380,11 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnSlideDown(InputAction.CallbackContext context);
         /// <summary>
-        /// Method invoked when associated input action "BounceLeft" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// Method invoked when associated input action "Bounce" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnBounceLeft(InputAction.CallbackContext context);
-        /// <summary>
-        /// Method invoked when associated input action "BounceRight" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
-        /// </summary>
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnBounceRight(InputAction.CallbackContext context);
+        void OnBounce(InputAction.CallbackContext context);
     }
 }

@@ -14,7 +14,7 @@ Material:
   m_ValidKeywords: []
   m_InvalidKeywords: []
   m_LightmapFlags: 4
-  m_EnableInstancingVariants: 0
+  m_EnableInstancingVariants: 1
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
   stringTagMap: {}
@@ -58,7 +58,7 @@ Material:
     - _EffectCount: 5.7
     - _EnableExternalAlpha: 0
     - _Frequency: 10
-    - _Speed: 3.52
+    - _Speed: 3.2
     - _Strength: 0.05
     - _Strentgh: 1.23
     - _ZWrite: 0

@@ -5,6 +5,5 @@ public enum PlayerState
     Running,
     Sliding,
     Jumping,
-    BouncingLeft,
-    BoucningRight
+    Bouncing,
 }

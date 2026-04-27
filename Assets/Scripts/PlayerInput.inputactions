@@ -25,18 +25,9 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "BounceLeft",
+                    "name": "Bounce",
                     "type": "Button",
                     "id": "45e578fb-0b5e-4996-9b2e-c4ab45a7090d",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "BounceRight",
-                    "type": "Button",
-                    "id": "d034aa08-b403-41e4-82d8-85e6defd9254",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -73,18 +64,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "BounceLeft",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "6ee339fa-bff9-4f04-a1b7-2ed449d65b4d",
-                    "path": "<Keyboard>/d",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "BounceRight",
+                    "action": "Bounce",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

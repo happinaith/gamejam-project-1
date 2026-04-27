@@ -6,32 +6,35 @@ public class PlayerVisual : MonoBehaviour
     private Animator _animator;
 
     private static readonly int SlideTrigger = Animator.StringToHash("DoSlide");
+    private static readonly int JumpTrigger = Animator.StringToHash("DoJump");
+    private static readonly int BounceTrigger = Animator.StringToHash("DoBounce");
 
     private void Start()
     {
         EventBus.OnSliding += SlidingEffect;
-        EventBus.OnBounceLeft += BounceLeftEffect;
-        EventBus.OnBounceRight += BounceRightEffect;
+        EventBus.OnBounce += BounceEffect;
+        EventBus.OnJumping += JumpingEffect;
 
         component = GetComponent<SpriteRenderer>();
         _animator = GetComponent<Animator>();
     }
 
-    private void BounceRightEffect()
+    private void JumpingEffect()
     {
-        component.color = Color.red;
+        if (PlayerController.instance.state != PlayerState.Running) return;
+        _animator.SetTrigger(JumpTrigger);
     }
 
-    private void BounceLeftEffect()
+    private void BounceEffect()
     {
-        component.color = Color.green;
+        if (PlayerController.instance.state != PlayerState.Running) return;
+        _animator.SetTrigger(BounceTrigger);
     }
 
     private void SlidingEffect()
     {
         if (PlayerController.instance.state != PlayerState.Running) return;
         _animator.SetTrigger(SlideTrigger);
-        component.color = Color.chartreuse;
     }
 
     private void AnimationOver()
